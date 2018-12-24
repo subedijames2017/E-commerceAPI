@@ -1,7 +1,7 @@
 const express = require("express");
 var router = express.Router();
 const multer = require('multer')
-const { ManProduct,WomanProduct,ElectricaluseProduct,DailyuseProduct } = require('../../models/Product')
+const { ManProduct,WomanProduct,ElectricaluseProduct,DailyuseProduct,HelthProduct,KidsProduct,AutoProduct,GroceryProduct,BookProduct } = require('../../models/Product')
 
 //seting the upload critaria
 var uploadFnct = function(dest){
@@ -66,16 +66,18 @@ router.post('/add/man',(req,res)=>{
                 return res.status(400).json(errors)
             }else{
                     const newProduct = new ManProduct({
+                        type:req.body.type,
+                        title:req.body.title,
                         name:req.body.name,
-                        price:req.body.price,
+                        currentprice:req.body.currentprice,
+                        previousprice:req.body.previousprice,
                         description:req.body.description,
                         image:req.file.path
                     })
-                    console.log(newProduct)
                     newProduct
                     .save()
                     .then(product=>res.json(product))
-                    .catch(err=>log(err))   
+                    .catch(err=>res.status(400).json(err))
             }
         }
     })
@@ -94,12 +96,13 @@ router.post('/add/woman',(req,res)=>{
                 return res.status(400).json(errors)
             }else{
                     const newProduct = new WomanProduct({
+                        type:req.body.type,
+                        title:req.body.title,
                         name:req.body.name,
-                        price:req.body.price,
+                        currentprice:req.body.currentprice,
                         description:req.body.description,
                         image:req.file.path
                     })
-                    console.log(newProduct)
                     newProduct
                     .save()
                     .then(product=>res.json(product))
@@ -109,7 +112,7 @@ router.post('/add/woman',(req,res)=>{
     })
 })
 
-//@route api/dashboard/add/man
+//@route api/dashboard/add/electrical
 //Access  private
 router.post('/add/electrical',(req,res)=>{
     var errors = {};
@@ -123,12 +126,13 @@ router.post('/add/electrical',(req,res)=>{
                 return res.status(400).json(errors)
             }else{
                     const newProduct = new ElectricaluseProduct({
+                        type:req.body.type,
+                        title:req.body.title,
                         name:req.body.name,
-                        price:req.body.price,
+                        currentprice:req.body.currentprice,
                         description:req.body.description,
                         image:req.file.path
                     })
-                    console.log(newProduct)
                     newProduct
                     .save()
                     .then(product=>res.json(product))
@@ -137,7 +141,7 @@ router.post('/add/electrical',(req,res)=>{
         }
     })
 })
-//@route api/dashboard/add/man
+//@route api/dashboard/add/dailyuse
 //Access  private
 router.post('/add/dailyuse',(req,res)=>{
     var errors = {};
@@ -151,8 +155,10 @@ router.post('/add/dailyuse',(req,res)=>{
                 return res.status(400).json(errors)
             }else{
                     const newProduct = new DailyuseProduct({
+                        type:req.body.type,
+                        title:req.body.title,
                         name:req.body.name,
-                        price:req.body.price,
+                        currentprice:req.body.currentprice,
                         description:req.body.description,
                         image:req.file.path
                     })
@@ -165,5 +171,151 @@ router.post('/add/dailyuse',(req,res)=>{
         }
     })
 })
-
+//@route api/dashboard/add/helth
+//Access  private
+router.post('/add/helth',(req,res)=>{
+    var errors = {};
+    const currUpload = uploadFnct('helth');
+    currUpload(req,res,(err)=>{
+        if(err){
+            return res.status(400).json(err)
+        }else{
+            if(req.file == undefined){
+                errors.file="File undefined"
+                return res.status(400).json(errors)
+            }else{
+                    const newProduct = new HelthProduct({
+                        type:req.body.type,
+                        title:req.body.title,
+                        name:req.body.name,
+                        currentprice:req.body.currentprice,
+                        description:req.body.description,
+                        image:req.file.path
+                    })
+                    console.log(newProduct)
+                    newProduct
+                    .save()
+                    .then(product=>res.json(product))
+                    .catch(err=>log(err))   
+            }
+        }
+    })
+})
+//@route api/dashboard/add/kid
+//Access  private
+router.post('/add/kid',(req,res)=>{
+    var errors = {};
+    const currUpload = uploadFnct('kids');
+    currUpload(req,res,(err)=>{
+        if(err){
+            return res.status(400).json(err)
+        }else{
+            if(req.file == undefined){
+                errors.file="File undefined"
+                return res.status(400).json(errors)
+            }else{
+                    const newProduct = new KidsProduct({
+                        type:req.body.type,
+                        title:req.body.title,
+                        name:req.body.name,
+                        currentprice:req.body.currentprice,
+                        description:req.body.description,
+                        image:req.file.path
+                    })
+                    console.log(newProduct)
+                    newProduct
+                    .save()
+                    .then(product=>res.json(product))
+                    .catch(err=>log(err))   
+            }
+        }
+    })
+})
+//@route api/dashboard/add/auto
+//Access  private
+router.post('/add/auto',(req,res)=>{
+    var errors = {};
+    const currUpload = uploadFnct('auto');
+    currUpload(req,res,(err)=>{
+        if(err){
+            return res.status(400).json(err)
+        }else{
+            if(req.file == undefined){
+                errors.file="File undefined"
+                return res.status(400).json(errors)
+            }else{
+                    const newProduct = new AutoProduct({
+                        type:req.body.type,
+                        title:req.body.title,
+                        name:req.body.name,
+                        currentprice:req.body.currentprice,
+                        description:req.body.description,
+                        image:req.file.path
+                    })
+                    newProduct
+                    .save()
+                    .then(product=>res.json(product))
+                    .catch(err=>log(err))   
+            }
+        }
+    })
+})
+//@route api/dashboard/add/groceries
+//Access  private
+router.post('/add/groceries',(req,res)=>{
+    var errors = {};
+    const currUpload = uploadFnct('groceries');
+    currUpload(req,res,(err)=>{
+        if(err){
+            return res.status(400).json(err)
+        }else{
+            if(req.file == undefined){
+                errors.file="File undefined"
+                return res.status(400).json(errors)
+            }else{
+                    const newProduct = new GroceryProduct({
+                        type:req.body.type,
+                        title:req.body.title,
+                        name:req.body.name,
+                        currentprice:req.body.currentprice,
+                        description:req.body.description,
+                        image:req.file.path
+                    })
+                    newProduct
+                    .save()
+                    .then(product=>res.json(product))
+                    .catch(err=>log(err))   
+            }
+        }
+    })
+})
+//@route api/dashboard/add/book
+//Access  private
+router.post('/add/book',(req,res)=>{
+    var errors = {};
+    const currUpload = uploadFnct('books');
+    currUpload(req,res,(err)=>{
+        if(err){
+            return res.status(400).json(err)
+        }else{
+            if(req.file == undefined){
+                errors.file="File undefined"
+                return res.status(400).json(errors)
+            }else{
+                    const newProduct = new BookProduct({
+                        type:req.body.type,
+                        title:req.body.title,
+                        name:req.body.name,
+                        currentprice:req.body.currentprice,
+                        description:req.body.description,
+                        image:req.file.path
+                    })
+                    newProduct
+                    .save()
+                    .then(product=>res.json(product))
+                    .catch(err=>log(err))   
+            }
+        }
+    })
+})
 module.exports = router;
