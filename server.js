@@ -3,6 +3,7 @@ const app = express();
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const products = require('./routes/api/products');
+const path = require('path')
 
 //bodyParse middleware
 app.use(bodyParser.urlencoded({extended:false}));
@@ -11,9 +12,9 @@ app.use(bodyParser.json());
 //mongoose promice
 mongoose.Promise=global.Promise;
 
-// Public Folder
-app.use(express.static('./uploads'));
 
+//seting static folder
+app.use(express.static(path.join(__dirname)))
 
 //database connection
 const db=require('./config/keys').mongoURI
